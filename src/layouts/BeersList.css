@@ -1,0 +1,9 @@
+.beerslist{
+    max-height: 90vh;
+    overflow: scroll;
+}
+
+.beerslist img{
+    width: 20px;
+    margin-right: 5px;
+}
