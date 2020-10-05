@@ -7,15 +7,16 @@ class BeersDetail extends Component {
         error: null
     }
 
-    componentDidMount(){
+    componentDidUpdate(){
         axios({
             method: 'GET',
-            url: `${process.env.REACT_APP_BASE_URL}/beer/${this.props.match.params.id}`,
+            url: `${process.env.REACT_APP_BASE_URL}/beer/${this.props.match.params.id}/`,
             params: {
+            withBreweries: "Y",
               key: `${process.env.REACT_APP_API_KEY}`
             }
           })
-          .then(response => {
+        .then(response => {
             let beer = response.data.data;
             this.setState({beer});
           })
@@ -25,6 +26,7 @@ class BeersDetail extends Component {
     }
 
     render() {
+        // let beer = this.state.beers.find(beer => beer.id === this.props.match.params.id);
         let beer = this.state.beer;
         if (beer.length === 0){
             return <h1>Loading...</h1>
