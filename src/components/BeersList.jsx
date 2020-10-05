@@ -12,36 +12,21 @@ class BeersList extends Component {
     this.searchBeers = this.searchBeers.bind(this);
     this.getBeers = this.getBeers.bind(this);
     this.getNextPage = this.getNextPage.bind(this);
+    this.getCountryList = this.getCountryList.bind(this);
   }
 
   state = {
     beers: [],
     filteredBeers: [],
+    countries: [],
+    chosenCountry: "",
     page: 1,
     nbOfPages: 1,
-    cuPage: 1,
-    curPage: 1,
     error: null
   }
 
-  // componentDidMount(){
-  //   axios({
-  //     method: 'GET',
-  //     url: `${process.env.REACT_APP_BASE_URL}/beers`,
-  //     params: {
-  //       key: `${process.env.REACT_APP_API_KEY}`
-  //     }
-  //   })
-  //     .then(response => {
-  //       let beers = response.data.data;
-  //       this.setState({beers: beers, filteredBeers: beers});
-  //     })
-  //     .catch (error => {
-  //       this.setState({error});
-  //     })
-  // }
-
   componentDidMount(){
+    this.getCountryList();
     axios({
       method: 'GET',
       url: `${process.env.REACT_APP_BASE_URL}/beers/`,
@@ -53,9 +38,8 @@ class BeersList extends Component {
     })
     .then(response => {
       debugger
-      let cuPage = response.data.currentPage;
       let beers = response.data.data;
-      this.setState({beers, filteredBeers: beers, nbOfPages: response.data.numberOfPages, cuPage});
+      this.setState({beers, filteredBeers: beers, nbOfPages: response.data.numberOfPages});
     })
     .catch (error => {
       this.setState({error});
@@ -74,9 +58,8 @@ class BeersList extends Component {
     })
     .then(response => {
       debugger
-      let curPage = response.data.currentPage;
       let beers = response.data.data;
-      this.setState({beers: beers, filteredBeers: beers, nbOfPages: response.data.numberOfPages, curPage});
+      this.setState({beers: beers, filteredBeers: beers, nbOfPages: response.data.numberOfPages});
     })
     .catch (error => {
       this.setState({error});
@@ -105,6 +88,38 @@ class BeersList extends Component {
     })
   }
 
+  getCountryList() {
+    axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_BASE_URL}/locations/`,
+      params: {
+        key: `${process.env.REACT_APP_API_KEY}`
+    }
+    })
+    .then(response => {
+        debugger
+        let locations = response.data.data;
+        let countries =[];
+        locations.map(loc => {
+          if (!countries.includes(loc.countryIsoCode)) countries.push(loc.countryIsoCode);
+          return countries;
+        })
+        this.setState({ countries });
+        console.log(this.state.countries);
+    })
+    .catch((error)=> {
+      this.setState({error})
+    })
+  }
+
+  chooseCountry(e){
+    e.preventDefault();
+    let chosenCountry = this.state.chosenCountry;
+    chosenCountry[e.target.name] = e.target.value;
+    this.setState({chosenCountry})
+    this.getBeers();
+  }
+
   getNextPage() {
     this.setState({page: this.state.page + 1});
     this.getBeers();
@@ -120,7 +135,16 @@ class BeersList extends Component {
           placeholder="Search"
           name="search"
           onChange={this.searchBeers}
-          />  
+          />
+          <label for="country-select">Choose a country:</label>
+          <select id="country-select">
+              <option value="">--Please choose a country--</option>
+              {this.state.countries.map(country => (
+                <option key={country} value={country}>
+                    {country}
+                </option>
+              ))}
+          </select>
         </div>
         <div className="container">
           <div className="row">

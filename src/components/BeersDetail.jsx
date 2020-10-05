@@ -17,6 +17,25 @@ class BeersDetail extends Component {
             }
           })
         .then(response => {
+            debugger
+            let beer = response.data.data;
+            this.setState({beer});
+          })
+          .catch (error => {
+            this.setState({error});
+          })
+    }
+
+    componentDidMount(){
+        axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_BASE_URL}/beer/${this.props.match.params.id}/`,
+            params: {
+            withBreweries: "Y",
+              key: `${process.env.REACT_APP_API_KEY}`
+            }
+          })
+        .then(response => {
             let beer = response.data.data;
             this.setState({beer});
           })
