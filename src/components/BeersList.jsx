@@ -13,6 +13,7 @@ class BeersList extends Component {
     this.getBeers = this.getBeers.bind(this);
     this.getNextPage = this.getNextPage.bind(this);
     this.getCountryList = this.getCountryList.bind(this);
+    this.chooseCountry = this.chooseCountry.bind(this);
   }
 
   state = {
@@ -113,10 +114,9 @@ class BeersList extends Component {
   }
 
   chooseCountry(e){
+    debugger
     e.preventDefault();
-    let chosenCountry = this.state.chosenCountry;
-    chosenCountry[e.target.name] = e.target.value;
-    this.setState({chosenCountry})
+    this.setState({chosenCountry : e.target.value})
     this.getBeers();
   }
 
@@ -136,8 +136,8 @@ class BeersList extends Component {
           name="search"
           onChange={this.searchBeers}
           />
-          <label for="country-select">Choose a country:</label>
-          <select id="country-select">
+          {/* <label for="country-select">Choose a country:</label> */}
+          <select id="country-select" onChange={this.chooseCountry}>
               <option value="">--Please choose a country--</option>
               {this.state.countries.map(country => (
                 <option key={country} value={country}>
@@ -158,12 +158,28 @@ class BeersList extends Component {
                   this.state.filteredBeers === 0 ?
                   <h1>Loading...</h1>:
                   this.state.filteredBeers.map(beer => 
-                    <div key={beer.id}>
-                      <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
-                        {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
-                        {beer.nameDisplay}
-                      </Link>
-                    </div>
+                    {if (this.state.chosenCountry === ""){
+                      return (
+                        <div key={beer.id}>
+                          <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                            {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
+                            {beer.nameDisplay}
+                          </Link>
+                        </div>
+                      )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry) {
+                      return (
+                        <div key={beer.id}>
+                          <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                            {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
+                            {beer.nameDisplay}
+                          </Link>
+                        </div>
+                      )} 
+                      // else {
+                      // return (
+                      //   <p>No beer available</p>
+                      // )}
+                    }
                   )
                 }
               </div>
