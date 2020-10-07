@@ -14,6 +14,8 @@ class BeersList extends Component {
     this.getNextPage = this.getNextPage.bind(this);
     this.getCountryList = this.getCountryList.bind(this);
     this.chooseCountry = this.chooseCountry.bind(this);
+    this.getTypeList = this.getTypeList.bind(this);
+    this.chooseType = this.chooseType.bind(this);
   }
 
   state = {
@@ -21,6 +23,8 @@ class BeersList extends Component {
     filteredBeers: [],
     countries: [],
     chosenCountry: "",
+    types: [],
+    chosenType: "",
     page: 1,
     nbOfPages: 1,
     error: null
@@ -28,6 +32,7 @@ class BeersList extends Component {
 
   componentDidMount(){
     this.getCountryList();
+    this.getTypeList();
     axios({
       method: 'GET',
       url: `${process.env.REACT_APP_BASE_URL}/beers/`,
@@ -106,7 +111,6 @@ class BeersList extends Component {
           return countries;
         })
         this.setState({ countries });
-        console.log(this.state.countries);
     })
     .catch((error)=> {
       this.setState({error})
@@ -120,6 +124,37 @@ class BeersList extends Component {
     this.getBeers();
   }
 
+  getTypeList() {
+    axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_BASE_URL}/categories/`,
+      params: {
+        key: `${process.env.REACT_APP_API_KEY}`
+    }
+    })
+    .then(response => {
+        debugger
+        let categories = response.data.data;
+        let types =[];
+        categories.map(loc => {
+          if (!types.includes(loc.name)) types.push(loc.name);
+          return types;
+        })
+        this.setState({ types });
+    })
+    .catch((error)=> {
+      this.setState({error})
+    })
+  }
+
+  chooseType(e){
+    debugger
+    e.preventDefault();
+    console.log(this.state.chosenType);
+    this.setState({chosenType : e.target.value})
+    this.getBeers();
+  }
+
   getNextPage() {
     this.setState({page: this.state.page + 1});
     this.getBeers();
@@ -128,20 +163,28 @@ class BeersList extends Component {
   render() { 
     return (
       <div>
-        <div>
+        <div className="countainer">
           <input
+          className=" offset-2 col-md-2 col-8"
           type="text"
           className="input search-bar"
           placeholder="Search"
           name="search"
           onChange={this.searchBeers}
           />
-          {/* <label for="country-select">Choose a country:</label> */}
-          <select id="country-select" onChange={this.chooseCountry}>
+          <select className=" offset-md-2 col-md-2 col-8" id="country-select" onChange={this.chooseCountry}>
               <option value="">--Please choose a country--</option>
               {this.state.countries.map(country => (
                 <option key={country} value={country}>
                     {country}
+                </option>
+              ))}
+          </select>
+          <select className="offset-md-2 col-md-2 col-8" id="type-select" onChange={this.chooseType}>
+              <option value="">--Please choose a type--</option>
+              {this.state.types.map(type => (
+                <option key={type} value={type}>
+                    {type}
                 </option>
               ))}
           </select>
@@ -158,7 +201,7 @@ class BeersList extends Component {
                   this.state.filteredBeers === 0 ?
                   <h1>Loading...</h1>:
                   this.state.filteredBeers.map(beer => 
-                    {if (this.state.chosenCountry === ""){
+                    {if (this.state.chosenCountry === "" && this.state.chosenType === ""){
                       return (
                         <div key={beer.id}>
                           <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
@@ -166,7 +209,7 @@ class BeersList extends Component {
                             {beer.nameDisplay}
                           </Link>
                         </div>
-                      )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry) {
+                      )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && this.state.chosenType === "") {
                       return (
                         <div key={beer.id}>
                           <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
@@ -174,11 +217,23 @@ class BeersList extends Component {
                             {beer.nameDisplay}
                           </Link>
                         </div>
-                      )} 
-                      // else {
-                      // return (
-                      //   <p>No beer available</p>
-                      // )}
+                      )} else if (this.state.chosenCountry === "" && beer.style !== undefined && beer.style.category.name === this.state.chosenType) {
+                        return (
+                          <div key={beer.id}>
+                            <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                              {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
+                              {beer.nameDisplay}
+                            </Link>
+                          </div>
+                        )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && beer.style !== undefined && beer.style.category.name === this.state.chosenType) {
+                          return (
+                            <div key={beer.id}>
+                              <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                                {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
+                                {beer.nameDisplay}
+                              </Link>
+                            </div>
+                          )} 
                     }
                   )
                 }
