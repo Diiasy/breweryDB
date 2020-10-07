@@ -4,14 +4,14 @@
 * [General info](#general-info)
 * [Stack](#stack)
 * [How it works](#how-it-works)
-* [Pictures of the app](#pictures)
+* [Pictures of the app](#pictures-of-the-app)
+* [Improvements](#improvements)
 
 
 ## Title
 
 Find your beer
 
-In the project directory, you can run:
 
 ## Setup
 
@@ -27,8 +27,8 @@ You will also see any lint errors in the console.
 
 ## General info
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-This project uses [BreweryDB API](https://www.brewerydb.com/).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br />
+This project uses [BreweryDB API](https://www.brewerydb.com/).<br />
 The app was made as an assignment from PXL.Widgets Heroes.
 
 
@@ -46,9 +46,11 @@ The details of the beers are shown on the same page to allow to go from one beer
 It is possible to navigate through the newt page button.
 
 Three search patterns are available and can be combined:
-1. **Search by country**: the app is searching the countries when the page is loading from the /locations endpoint and show the beers by countries when selected
-2. **Search by type**: the app is searching the different types when the page is loading frmo the categories endpoint and show the beers by type when selected
+1. **Search by country**: the app is searching the countries when the page is loading from the /locations endpoint and show the beers by countries when selected.
+2. **Search by type**: the app is searching the different types when the page is loading frmo the categories endpoint and show the beers by type when selected.
 3. **Seach by name**: the API allows us to search for full words only. I decided to do a responsive search, which means that on every character added, the search will happened.
+
+**Warning**: I decided to create a list for beers and only show the beers bby country and type without updating the list when the search is done. This allows the user to search by country and type but not by name and country or name and type.
 
 
 ## Pictures of the app
@@ -80,3 +82,9 @@ Three search patterns are available and can be combined:
 <div style="display: flex; justify-content: center">
     <img src="https://res.cloudinary.com/diiasy/image/upload/v1602075249/pxlassignment/beer-detail-mobile_eascdc.png" />
 </div>
+
+
+## Improvements
+
+* The biggest bug of the app is related to pages. When a selection for country or type is done, it automatically swithces to the next page. The total number of pages is also not updates.
+* The second glitch is that it is not possible to search by name at the same time as bu country or type. To make it possible, I should create a state for the beers by country and another one for the beers by type and then each in these lists.

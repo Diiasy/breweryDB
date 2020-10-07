@@ -107,7 +107,7 @@ class BeersList extends Component {
           if (!countries.includes(loc.countryIsoCode)) countries.push(loc.countryIsoCode);
           return countries;
         })
-        this.setState({ countries });
+        this.setState({countries});
     })
     .catch((error)=> {
       this.setState({error})
@@ -135,7 +135,7 @@ class BeersList extends Component {
           if (!types.includes(loc.name)) types.push(loc.name);
           return types;
         })
-        this.setState({ types });
+        this.setState({types});
     })
     .catch((error)=> {
       this.setState({error})
