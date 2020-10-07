@@ -45,7 +45,6 @@ class BeersDetail extends Component {
     }
 
     render() {
-        // let beer = this.state.beers.find(beer => beer.id === this.props.match.params.id);
         let beer = this.state.beer;
         if (beer.length === 0){
             return <h1>Loading...</h1>

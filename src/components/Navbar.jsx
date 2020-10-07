@@ -16,13 +16,10 @@ function NavbarApp() {
             <Navbar.Collapse className="collapse navbar-collapse nav-list" id="responsive-navbar-nav">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <Link className="nav-link p-2" to='/properties'>Per country</Link>
+                  <Link className="nav-link p-2" to='/beers'>Beers</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link p-2" to='/map'>Per type</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link p-2" to='/search'>Search a beer</Link>
+                  <Link className="nav-link p-2" to='/about'>About</Link>
                 </li>
               </ul>
               

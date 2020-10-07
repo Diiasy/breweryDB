@@ -164,35 +164,60 @@ class BeersList extends Component {
     return (
       <div>
         <div className="countainer">
-          <input
-          className=" offset-2 col-md-2 col-8"
-          type="text"
-          className="input search-bar"
-          placeholder="Search"
-          name="search"
-          onChange={this.searchBeers}
-          />
-          <select className=" offset-md-2 col-md-2 col-8" id="country-select" onChange={this.chooseCountry}>
-              <option value="">--Please choose a country--</option>
-              {this.state.countries.map(country => (
-                <option key={country} value={country}>
-                    {country}
-                </option>
-              ))}
-          </select>
-          <select className="offset-md-2 col-md-2 col-8" id="type-select" onChange={this.chooseType}>
-              <option value="">--Please choose a type--</option>
-              {this.state.types.map(type => (
-                <option key={type} value={type}>
-                    {type}
-                </option>
-              ))}
-          </select>
+          <div className="row d-flex justify-content-around">
+            <div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <label className="input-group-text" for="country-select">Country</label>
+                </div>
+                <select className="custom-select" id="country-select"  onChange={this.chooseCountry}>
+                  <option value="">-- Choose --</option>
+                  {this.state.countries.map(country => (
+                    <option key={country} value={country}>
+                        {country}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <label className="input-group-text" for="type-select">Type</label>
+                </div>
+                <select className="custom-select" id="type-select"  onChange={this.chooseType}>
+                  <option value="">-- Choose --</option>
+                  {this.state.types.map(type => (
+                    <option key={type} value={type}>
+                        {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <label className="input-group-text" for="search">Search</label>
+                </div>
+                <input
+                className="form-control"
+                id="search"
+                type="text"
+                placeholder="Search"
+                name="search"
+                onChange={this.searchBeers}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div className="container">
-          <div className="row">
-            <button className="col-md-3 col-12" onClick={this.getNextPage}>Next page</button>
-            <p className="col-md-2 col-12">Page {this.state.page}/{this.state.nbOfPages}</p>
+          <div className="col-md-5 col-12 d-flex justify-content-around align-items-center">
+            <p className="m-2 p-0">Page {this.state.page}/{this.state.nbOfPages}</p>
+            <button className="p-2 m-2 btn btn-outline-dark" onClick={this.getNextPage}>Next page</button>
           </div>
           <div className="row">
             <div className="beerslist col-md-5 col-12">
@@ -204,7 +229,7 @@ class BeersList extends Component {
                     {if (this.state.chosenCountry === "" && this.state.chosenType === ""){
                       return (
                         <div key={beer.id}>
-                          <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                          <Link className="list-group-item list-group-item-action" to={`/beers/${beer.id}`}>
                             {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
                             {beer.nameDisplay}
                           </Link>
@@ -212,7 +237,7 @@ class BeersList extends Component {
                       )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && this.state.chosenType === "") {
                       return (
                         <div key={beer.id}>
-                          <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                          <Link className="list-group-item list-group-item-action" to={`/beers/${beer.id}`}>
                             {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
                             {beer.nameDisplay}
                           </Link>
@@ -220,7 +245,7 @@ class BeersList extends Component {
                       )} else if (this.state.chosenCountry === "" && beer.style !== undefined && beer.style.category.name === this.state.chosenType) {
                         return (
                           <div key={beer.id}>
-                            <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                            <Link className="list-group-item list-group-item-action" to={`/beers/${beer.id}`}>
                               {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
                               {beer.nameDisplay}
                             </Link>
@@ -228,7 +253,7 @@ class BeersList extends Component {
                         )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && beer.style !== undefined && beer.style.category.name === this.state.chosenType) {
                           return (
                             <div key={beer.id}>
-                              <Link className="list-group-item list-group-item-action" to={`/beer/${beer.id}`}>
+                              <Link className="list-group-item list-group-item-action" to={`/beers/${beer.id}`}>
                                 {(beer.labels === undefined || beer.labels.icon === undefined) ? <img src="https://i.pinimg.com/originals/c6/1c/a5/c61ca5bebd5fac190227f602ab0d6fe8.png" alt="beer"/> : <img src={beer.labels.icon} alt={beer.name}/>}
                                 {beer.nameDisplay}
                               </Link>
@@ -240,7 +265,7 @@ class BeersList extends Component {
               </div>
             </div>
             <div className="col-md-7 col-12">
-              <Route path="/beer/:id" component={BeersDetail} />
+              <Route path="/beers/:id" component={BeersDetail} />
             </div>        
           </div>
         </div>
