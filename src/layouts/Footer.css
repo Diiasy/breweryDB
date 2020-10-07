@@ -16,3 +16,8 @@ footer p {
     margin: 0px 20px;
     color: rgb(124, 124, 131);
 }
+
+.spacer {
+    height: 100px;
+    background-color: white;
+}

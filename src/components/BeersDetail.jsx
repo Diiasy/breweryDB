@@ -17,7 +17,6 @@ class BeersDetail extends Component {
             }
           })
         .then(response => {
-            debugger
             let beer = response.data.data;
             this.setState({beer});
           })
@@ -60,6 +59,10 @@ class BeersDetail extends Component {
                     <tr>
                         <td>Description</td>
                         {(beer.style === undefined || beer.style.description === undefined) ? <td>No description</td> : <td>{beer.style.description}</td>}
+                    </tr>
+                    <tr>
+                        <td>ABV</td>
+                        <td>{beer.abv}%</td>
                     </tr>
                     <tr>
                         <td>Organic</td>

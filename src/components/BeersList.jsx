@@ -43,7 +43,6 @@ class BeersList extends Component {
       }
     })
     .then(response => {
-      debugger
       let beers = response.data.data;
       this.setState({beers, filteredBeers: beers, nbOfPages: response.data.numberOfPages});
     })
@@ -63,7 +62,6 @@ class BeersList extends Component {
       }
     })
     .then(response => {
-      debugger
       let beers = response.data.data;
       this.setState({beers: beers, filteredBeers: beers, nbOfPages: response.data.numberOfPages});
     })
@@ -103,7 +101,6 @@ class BeersList extends Component {
     }
     })
     .then(response => {
-        debugger
         let locations = response.data.data;
         let countries =[];
         locations.map(loc => {
@@ -118,7 +115,6 @@ class BeersList extends Component {
   }
 
   chooseCountry(e){
-    debugger
     e.preventDefault();
     this.setState({chosenCountry : e.target.value})
     this.getBeers();
@@ -133,7 +129,6 @@ class BeersList extends Component {
     }
     })
     .then(response => {
-        debugger
         let categories = response.data.data;
         let types =[];
         categories.map(loc => {
@@ -148,7 +143,6 @@ class BeersList extends Component {
   }
 
   chooseType(e){
-    debugger
     e.preventDefault();
     console.log(this.state.chosenType);
     this.setState({chosenType : e.target.value})
@@ -234,7 +228,7 @@ class BeersList extends Component {
                             {beer.nameDisplay}
                           </Link>
                         </div>
-                      )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && this.state.chosenType === "") {
+                      )} else if (beer.breweries !== undefined && beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && this.state.chosenType === "") {
                       return (
                         <div key={beer.id}>
                           <Link className="list-group-item list-group-item-action" to={`/beers/${beer.id}`}>
@@ -250,7 +244,7 @@ class BeersList extends Component {
                               {beer.nameDisplay}
                             </Link>
                           </div>
-                        )} else if (beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && beer.style !== undefined && beer.style.category.name === this.state.chosenType) {
+                        )} else if (beer.breweries !== undefined && beer.breweries[0].locations[0].countryIsoCode === this.state.chosenCountry && beer.style !== undefined && beer.style.category.name === this.state.chosenType) {
                           return (
                             <div key={beer.id}>
                               <Link className="list-group-item list-group-item-action" to={`/beers/${beer.id}`}>

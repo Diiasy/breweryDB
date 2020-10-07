@@ -1,10 +1,23 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
+* [Title](#title)
+* [Setup](#setup)
+* [General info](#general-info)
+* [Stack](#stack)
+* [How it works](#how-it-works)
+* [Pictures of the app](#pictures)
 
-## Available Scripts
+
+## Title
+
+Find your beer
 
 In the project directory, you can run:
 
-### `npm start`
+## Setup
+
+Please install node modules first with npm i.
+
+In the project directory, you can run: npm start.
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -12,57 +25,58 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
+## General info
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project uses [BreweryDB API](https://www.brewerydb.com/).
+The app was made as an assignment from PXL.Widgets Heroes.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Stack
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The project was developped with Javascript (React framework), HTML and CSS (Bootstrap framework).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## How it works
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The beer searching is available from the navbar or the home page.
+When first arriving on the page, the app is calling all the beers from the API.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The details of the beers are shown on the same page to allow to go from one beer to another easily.
+It is possible to navigate through the newt page button.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Three search patterns are available and can be combined:
+1. **Search by country**: the app is searching the countries when the page is loading from the /locations endpoint and show the beers by countries when selected
+2. **Search by type**: the app is searching the different types when the page is loading frmo the categories endpoint and show the beers by type when selected
+3. **Seach by name**: the API allows us to search for full words only. I decided to do a responsive search, which means that on every character added, the search will happened.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Pictures of the app
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Computer verion**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<div style="display: flex; justify-content: center">
+    <img src="https://res.cloudinary.com/diiasy/image/upload/v1602075251/pxlassignment/home_aavd7k.png" />
+</div>
 
-### Code Splitting
+<div style="display: flex; justify-content: center">
+    <img src="https://res.cloudinary.com/diiasy/image/upload/v1602075249/pxlassignment/beers-search_ikvghq.png" />
+</div>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+<div style="display: flex; justify-content: center">
+    <img src="https://res.cloudinary.com/diiasy/image/upload/v1602075249/pxlassignment/beer-detail_f27qyk.png" />
+</div>
 
-### Analyzing the Bundle Size
+**Mobile version**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+<div style="display: flex; justify-content: center">
+    <img src="https://res.cloudinary.com/diiasy/image/upload/v1602075250/pxlassignment/home-mobile_wxkpsl.png" />
+</div>
 
-### Making a Progressive Web App
+<div style="display: flex; justify-content: center">
+    <img src="https://res.cloudinary.com/diiasy/image/upload/v1602075249/pxlassignment/beers-search-mobile_btn0t3.png" />
+</div>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<div style="display: flex; justify-content: center">
+    <img src="https://res.cloudinary.com/diiasy/image/upload/v1602075249/pxlassignment/beer-detail-mobile_eascdc.png" />
+</div>
