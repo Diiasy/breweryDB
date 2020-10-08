@@ -1,52 +1,12 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 class BeersDetail extends Component {
-    state = {
-        beer: [],
-        error: null
-    }
-
-    componentDidUpdate(){
-        axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_BASE_URL}/beer/${this.props.match.params.id}/`,
-            params: {
-            withBreweries: "Y",
-              key: `${process.env.REACT_APP_API_KEY}`
-            }
-          })
-        .then(response => {
-            let beer = response.data.data;
-            this.setState({beer});
-          })
-          .catch (error => {
-            this.setState({error});
-          })
-    }
-
-    componentDidMount(){
-        axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_BASE_URL}/beer/${this.props.match.params.id}/`,
-            params: {
-            withBreweries: "Y",
-              key: `${process.env.REACT_APP_API_KEY}`
-            }
-          })
-        .then(response => {
-            let beer = response.data.data;
-            this.setState({beer});
-          })
-          .catch (error => {
-            this.setState({error});
-          })
-    }
-
     render() {
-        let beer = this.state.beer;
-        if (beer.length === 0){
-            return <h1>Loading...</h1>
+        console.log(this.props.beers)
+        let beers = this.props.beers;
+        let beer = beers.find(beer => beer.id === this.props.match.params.id);
+        if (beer === undefined){
+          return <h1>Select a beer</h1>
         } 
         return (
           <div className="beersdetail">

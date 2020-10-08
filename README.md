@@ -16,6 +16,9 @@ Find your beer
 ## Setup
 
 Please install node modules first with npm i.
+Create an .env file with :
+* REACT_APP_BASE_URL=https://sandbox-api.brewerydb.com/v2
+* REACT_APP_API_KEY=659d5c6b8f3d2447f090119e48202fdb
 
 In the project directory, you can run: npm start.
 

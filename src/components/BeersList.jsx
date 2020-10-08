@@ -144,7 +144,6 @@ class BeersList extends Component {
 
   chooseType(e){
     e.preventDefault();
-    console.log(this.state.chosenType);
     this.setState({chosenType : e.target.value})
     this.getBeers();
   }
@@ -162,7 +161,7 @@ class BeersList extends Component {
             <div>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
-                  <label className="input-group-text" for="country-select">Country</label>
+                  <label className="input-group-text" htmlFor="country-select">Country</label>
                 </div>
                 <select className="custom-select" id="country-select"  onChange={this.chooseCountry}>
                   <option value="">-- Choose --</option>
@@ -178,7 +177,7 @@ class BeersList extends Component {
             <div>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
-                  <label className="input-group-text" for="type-select">Type</label>
+                  <label className="input-group-text" htmlFor="type-select">Type</label>
                 </div>
                 <select className="custom-select" id="type-select"  onChange={this.chooseType}>
                   <option value="">-- Choose --</option>
@@ -194,7 +193,7 @@ class BeersList extends Component {
             <div>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
-                  <label className="input-group-text" for="search">Search</label>
+                  <label className="input-group-text" htmlFor="search">Search</label>
                 </div>
                 <input
                 className="form-control"
@@ -211,7 +210,9 @@ class BeersList extends Component {
         <div className="container">
           <div className="col-md-5 col-12 d-flex justify-content-around align-items-center">
             <p className="m-2 p-0">Page {this.state.page}/{this.state.nbOfPages}</p>
-            <button className="p-2 m-2 btn btn-outline-dark" onClick={this.getNextPage}>Next page</button>
+            <Link className="p-2 m-2 btn btn-outline-dark" to={`/beers`} onClick={this.getNextPage}>
+              Next page
+            </Link>
           </div>
           <div className="row">
             <div className="beerslist col-md-5 col-12">
@@ -253,13 +254,15 @@ class BeersList extends Component {
                               </Link>
                             </div>
                           )} 
+                          return false;
                     }
                   )
                 }
               </div>
             </div>
             <div className="col-md-7 col-12">
-              <Route path="/beers/:id" component={BeersDetail} />
+            <Route path={`/beers/:id`} render={(props) => <BeersDetail {...props} beers={this.state.beers} />} />
+              {/* <Route path="/beers/:id" component={BeersDetail} /> */}
             </div>        
           </div>
         </div>
